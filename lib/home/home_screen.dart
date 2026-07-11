@@ -1,4 +1,5 @@
 import 'package:contactapp/core/colors/colors.dart';
+import 'package:contactapp/home/widgets/add_contact_sheet.dart';
 import 'package:contactapp/home/widgets/home_body.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +15,16 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Mycolors.primaryColor,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            backgroundColor: Mycolors.primaryColor,
+            context: context,
+            builder: (context) => AddContactSheet(),
+          );
+        },
         focusColor: Mycolors.primaryColor,
         backgroundColor: Mycolors.sacondryColor,
-        child: Icon(Icons.add, color: Mycolors.primaryColor,),
-
+        child: Icon(Icons.add, color: Mycolors.primaryColor),
       ),
       body: HomeBody(),
     );
