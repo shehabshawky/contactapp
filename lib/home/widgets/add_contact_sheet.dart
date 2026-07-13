@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:contactapp/core/colors/colors.dart';
 import 'package:contactapp/home/widgets/add_contact_info.dart';
 import 'package:contactapp/home/widgets/button.dart';
 import 'package:contactapp/home/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:contactapp/models/contact_model.dart';
+
 import 'package:lottie/lottie.dart';
 
 class AddContactSheet extends StatefulWidget {
-  AddContactSheet({super.key});
+  final Function(ContactModel) onAdd;
+  AddContactSheet({super.key, required this.onAdd});
 
   @override
   State<AddContactSheet> createState() => _AddContactSheetState();
@@ -32,17 +37,20 @@ class _AddContactSheetState extends State<AddContactSheet> {
         children: [
           Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: .circular(28),
-                  border: BoxBorder.all(
-                    color: Mycolors.sacondryColor,
-                    width: 1,
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: 143,
+                  height: 146,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(color: Mycolors.sacondryColor),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(28),
+                    child: Lottie.asset("assets/lottie/image_picker.json"),
                   ),
                 ),
-                width: 143,
-                height: 146,
-                child: Lottie.asset("assets/lottie/image_picker.json"),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -91,7 +99,15 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   txt: "Enter user",
                   ontap: () {
                     if (formkey.currentState!.validate()) {
-                      print("Valid");
+                      ContactModel contact = ContactModel(
+                        name: nameController.text,
+                        email: emailController.text,
+                        phone: phoneController.text,
+                      );
+
+                      widget.onAdd(contact);
+
+                      Navigator.pop(context);
                     }
                   },
                 ),
